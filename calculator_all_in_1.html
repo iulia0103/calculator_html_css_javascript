@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Calculator</title>
+		<link href="jquery-ui-1.11.4/jquery-ui.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="jquery-ui-1.11.4/jquery-ui.js"></script>
+    </head>
+    <body>
+  	<div id = "viewportsize">
+  		<div class = "box">
+  		<div class = "header">
+  			<img src = "http://www.clker.com/cliparts/f/5/f/0/1349803480867294890Close%20Button.svg.hi.png"/>
+  		</div>
+
+			<div class="main">
+				<form name = "calc">
+					<input readonly id = "white" name = "screen"></input>
+					<br>
+
+					<div class = "row1">
+							<input class = "button" type = "button" name = "7" value = "7" onclick = "put(7)"></input>
+							<input class = "button" type = "button" name = "8" value = "8" onclick = "put(8)"></input>
+							<input class = "button" type = "button" name = "9" value = "9" onclick = "put(9)"></input>
+							<input class = "button" id = "orange1" type = "button" name = "add" value = "+" onclick = "addition()"></input>
+							<br>
+					</div>
+
+					<div class = "row2">
+							<input class = "button" type = "button" name = "4" value = "4" onclick = "put(4)"></input>
+							<input class = "button" type = "button" name = "5" value = "5" onclick = "put(5)"></input>
+							<input class = "button" type = "button" name = "6" value = "6" onclick = "put(6)"></input>
+							<input class = "button" id = "orange1" type = "button" name = "substract" value = "-" onclick = "substraction()"></input>
+							<br>
+					</div>
+
+					<div class = "row3">
+							<input class = "button" type = "button" name = "1" value = "1" onclick = "put(1)" on></input>
+							<input class = "button" type = "button" name = "2" value = "2" onclick = "put(2)"></input>
+							<input class = "button" type = "button" name = "3" value = "3" onclick = "put(3)"></input>
+							<input class = "button" id = "orange1" type = "button" name = "multiply" value = "*" onclick = "muliplication()"></input>
+							<br>
+					</div>
+
+					<div class = "row4">
+							<input class = "button" type = "button" name = "percent" value = "%" onclick = "percentage()"></input>
+							<input class = "button" type = "button" name = "0" value = "0" onclick = "put(0)"></input>
+						<input class = "button" type = "button" name = "dot" value = "." onclick = "decimal()"></input>
+							<input class = "button" id = "orange1" type = "button" name = "divide" value = "/" onclick = "division()"></input>
+						<br>
+					</div>
+
+					<div class = "row5">
+						<input class = "important" id = "red" type = "button" name = "clearall" value = "AC" onclick = "clearAll()"></input>
+						<input class = "important" id = "red2" type = "button" name = "clearlast" value = "C" onclick = "clearLast()"></input>
+						<input class = "important" id = "orange2" type = "button" name = "equal" value = "=" onclick = "equals()"></input>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+  <style>
+
+	.box {
+		position: relative;
+		top: 50px;
+		left: 50px;
+		width: 460px;
+		height: 660px;
+		background-color:  #bfbfbf;
+		border: 4px solid #808080;
+		border-radius: 20px;
+	}
+
+	.header {
+		height: 40px;
+	}
+
+	img {
+		position: absolute;
+		top: 6px;
+		right: 20px;
+		width: 28px;
+		height: 28px;
+	}
+
+	#white {
+		position: absolute;
+		width: 420px;
+		height: 85px;
+		left: 20px;
+		border: 2px solid #808080;
+		border-radius: 10px;
+		font-size: 50px;
+		font-family: Garamond;
+	}
+
+	.row1{
+		position: absolute;
+		top: 140px;
+		left: 25px;
+	}
+
+	.row2{
+		position: absolute;
+		top: 240px;
+		left: 25px;
+	}
+
+	.row3{
+		position: absolute;
+		top: 340px;
+		left: 25px;
+  }
+
+	.row4{
+		position: absolute;
+		top: 440px;
+		left: 25px;
+	}
+
+	.row5{
+		position: absolute;
+		top: 540px;
+		left: 25px;
+	}
+
+	.button {
+		height: 85px;
+		width: 85px;
+		font-family: Garamond;
+		background-color:  #ffffe6;
+		font-size: 50px;
+		margin-right: 20px;
+		border: 2px solid  #ffff1a;
+		border-radius: 10px;
+	}
+
+	.important {
+		height: 85px;
+		width: 120px;
+		font-family: Garamond;
+		font-size: 50px;
+		margin-right: 20px;
+		border-radius: 10px;
+	}
+
+  #orange1 {
+		background-color: #ffd1b3;
+		border: 2px solid #ff8533;
+	}
+
+	#orange2 {
+		background-color: #ff751a;
+		border: 2px solid #993d00;
+	}
+
+	#red {
+		background-color: #ff5050;
+		border: 2px solid #e60000;
+	}
+
+	#red2 {
+		background-color: #ff5050;
+		border: 2px solid #e60000;
+	}
+
+	</style>
+
+	<script>
+	    $(document).ready(function() {
+		    $( "#viewportsize" ).dialog();
+			  var focusOnText = false;
+			  $("#viewportsize" ).keyup(function( event ) {
+  				switch (event.keyCode){
+  					case 8:
+  						var x = $("#white").val();
+  						var newx = x.substring(0, x.length-1);
+  						$("#white").val(newx);
+  					break;
+
+  					case 46:
+  						$("#white").val(" ");
+  						break;
+  				}
+			  });
+
+			$("#viewportsize" ).keypress(function( event ) {
+				keypressed = String.fromCharCode(event.which);
+				var num = "1234567890"
+				var operators = "-+=*/%."
+				if(focusOnText == false)
+				{
+					if( (jQuery.inArray(keypressed, num) != -1 ) || ( (jQuery.inArray(keypressed, operators) != -1 ) && ((jQuery.inArray(keypressed, operators) != -1 ) && (jQuery.inArray($("#white").val()[$("#white").val().length-1], operators) == -1)) ) )
+					{
+						if(keypressed == '=')
+						{
+							var equation = eval($("#white").val());
+							$("#white").val(equation);
+						}
+						else
+							$("#white").val($("#white").val()+keypressed);
+					}
+				}
+			});
+
+			$("#white").focus(function() {
+			  focusOnText = true;
+			});
+
+			$("#white").focusout(function() {
+			  focusOnText = false;
+			});
+
+			$("img").click(function() {
+				$(".box").fadeOut("fast");
+			});
+
+			$(document).dblclick(function() {
+			   $(".box").fadeIn("fast");
+			});
+	  });
+	</script>
+
+  <script>
+		/*
+	    document.onkeypress = function(key) {
+		if(parseInt(key.which, 10) == 13) {
+			var equation = eval(document.calc.screen.value);
+			document.calc.screen.value = equation;
+		}
+		else
+			document.calc.screen.value += String.fromCharCode(key.which)
+
+		switch(parseInt(key.which, 10)) {
+		    case 55:
+		        document.calc.screen.value += "7";
+		        break;
+
+		    case 56:
+			document.calc.screen.value += "8";
+		        break;
+
+		    case 57:
+			document.calc.screen.value += "9";
+		        break;
+
+		    case 52:
+			document.calc.screen.value += "4";
+		        break;
+
+		    case 53:
+			document.calc.screen.value += "5";
+		        break;
+
+		    case 54:
+			document.calc.screen.value += "6";
+		        break;
+
+		    case 49:
+			document.calc.screen.value += "1";
+		        break;
+
+		    case 50:
+			document.calc.screen.value += "2";
+		        break;
+
+		    case 51:
+			document.calc.screen.value += "3";
+		        break;
+
+		    case 48:
+		    	document.calc.screen.value += "0";
+		        break;
+
+		    case 43:
+			document.calc.screen.value += "+";
+		        break;
+
+		    case 45:
+			document.calc.screen.value += "-";
+		        break;
+
+		    case 42:
+			document.calc.screen.value += "*";
+		        break;
+
+		    case 47:
+			document.calc.screen.value += "/";
+		        break;
+
+		    case 37:
+			document.calc.screen.value += "%";
+		        break;
+
+		    case 46:
+			document.calc.screen.value += ".";
+		        break;
+
+		    case 46:
+			document.calc.screen.value = " ";
+
+		    case 8:
+			alert("backspace");
+			var x = document.calc.screen.value;
+			var newx = x.substring(0, x.length-1);
+			document.calc.screen.value = newx;
+
+		    case 13:
+			var equation = eval(document.calc.screen.value);
+			document.calc.screen.value = equation;
+
+		};
+	    };*/
+
+    	function put(num) {
+        document.calc.screen.value += num;
+      };
+
+      function addition() {
+    		document.calc.screen.value += "+";
+      };
+
+      function substraction() {
+    		document.calc.screen.value += "-";
+      };
+
+      function muliplication() {
+    		document.calc.screen.value += "*";
+      };
+
+      function division() {
+    		document.calc.screen.value += "/";
+      };
+
+    	function percentage() {
+    		document.calc.screen.value += "%";
+    	};
+
+      function decimal() {
+    		document.calc.screen.value += ".";
+      };
+
+    	function clearAll() {
+    		document.calc.screen.value = " ";
+    	};
+
+    	function clearLast() {
+    		var x = document.calc.screen.value;
+    		var newx = x.substring(0, x.length-1);
+    		document.calc.screen.value = newx;
+    	};
+
+    	function equals() {
+    		var equation = eval(document.calc.screen.value);
+    		document.calc.screen.value = equation;
+    	};
+
+    </script>
+
+  </body>
+</html>
